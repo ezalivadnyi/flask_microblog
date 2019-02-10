@@ -7,25 +7,42 @@
     {% else %}
     <title>Welcome to Microblog</title>
     {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .header{
+            background-color: #EEEEEE;
+            margin-bottom: 1em;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        Microblog:
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('login') }}">Login</a>
+    <div class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="navbar-brand">Microblog</div>
+                <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            </nav>
+        </div>
     </div>
-    <hr>
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
 
-    {% block content %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>
