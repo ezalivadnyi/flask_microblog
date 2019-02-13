@@ -22,7 +22,11 @@
             <nav class="nav">
                 <div class="navbar-brand">Microblog</div>
                 <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                {% if current_user.is_anonymous %}
                 <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
             </nav>
         </div>
     </div>
@@ -34,7 +38,7 @@
                     {% if messages %}
                         <ul>
                             {% for message in messages %}
-                                <li class="alert alert-info" role="alert">{{ message }}</li>
+                                <li style="list-style: none" class="alert alert-info" role="alert">{{ message }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
