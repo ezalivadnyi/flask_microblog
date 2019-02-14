@@ -4,10 +4,11 @@
     <h1>{{ title }}</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
+
         {% include 'forms/username.html' %}
+        {% include 'forms/email.html' %}
         {% include 'forms/password.html' %}
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        {% include 'forms/password2.html' %}
         {% include 'forms/submit.html' %}
     </form>
-    <p>New User? <a href="{{ url_for('register') }}">Click here to Register!</a></p>
 {% endblock%}

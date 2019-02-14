@@ -1,0 +1,9 @@
+<div class="form-group row">
+    {{ form.email.label(class='col-form-label') }}
+    <div class="col-sm-10">
+        {{ form.email(size=32, class='form-control', autofocus=True) }}
+        {% for error in form.email.errors %}
+            <small class="form-text text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+</div>
