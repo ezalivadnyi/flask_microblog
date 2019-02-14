@@ -1,5 +1,5 @@
-from application import application_instance
-from application.forms import LoginForm
+from application import application_instance, db
+from application.forms import LoginForm, RegistrationForm
 from application.models import User
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -51,3 +51,21 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@application_instance.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        flash('You have already authenticated and redirected to index page.')
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        login_user(user)
+        flash('You was automatically logged in with your credentials.')
+        return redirect(url_for('index'))
+    return render_template('register.html', title='Registration', form=form)
