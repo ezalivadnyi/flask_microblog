@@ -4,11 +4,18 @@ from application.models import User
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from datetime import datetime
+
+
+@application_instance.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 
 @application_instance.route('/')
 @application_instance.route('/index')
-@login_required
 def index():
     posts = [
         {
@@ -69,3 +76,18 @@ def register():
         flash('You was automatically logged in with your credentials.')
         return redirect(url_for('index'))
     return render_template('register.html', title='Registration', form=form)
+
+
+@application_instance.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author': user, 'title': 'shshshshshsh shshshshshsh  shshshshshsh  shshshshshsh  shshshshshsh shshshshshshs hshshshshsh shshshshs', 'body': 'Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 '},
+        {'author': user, 'title': 'Test post title 2', 'body': 'Test post body 2'},
+        {'author': user, 'title': 'Test post title 3', 'body': 'Test post body 3'},
+        {'author': user, 'title': 'Test post title 4', 'body': 'Test post body 4'},
+        {'author': user, 'title': 'Test post title 5', 'body': 'Test post body 5'},
+        {'author': user, 'title': 'Test post title 6', 'body': 'Test post body 6'},
+    ]
+    return render_template('user.html', title='User Profile', user=user, posts=posts)

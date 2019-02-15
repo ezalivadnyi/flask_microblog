@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ title + ": " + user.username }}</h1>
+    <hr>
+
+    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar">
+
+    {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
+    {% if user.skype %}Skype: {{ user.skype }}<br>{% endif %}
+    {% if user.telegram %}
+        Telegram:
+        <a href="https://t.me/{{ user.telegram }}" target="_blank">
+            {{ user.telegram }}
+        </a><br>
+    {% endif %}
+    {% if user.facebook %}Facebook: {{ user.facebook }}<br>{% endif %}
+
+    {% if user.about_me %}About Me: {{ user.about_me }}<br>{% endif %}
+
+    <hr>
+    {% if posts %}
+        <h2>Latest posts:</h2>
+        <div class="list-group">
+            {% for post in posts %}
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ post.title }}</h5>
+                      <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">{{ post.body }}</p>
+                    {#<small>Donec id elit non mi porta.</small>#}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
