@@ -1,0 +1,9 @@
+<div class="form-group row">
+    {{ form.facebook.label(class='col-form-label') }}
+    <div class="col-sm-10">
+        {{ form.facebook(size=32, class='form-control') }}
+        {% for error in form.facebook.errors %}
+            <small class="form-text text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+</div>

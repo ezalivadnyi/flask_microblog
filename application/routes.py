@@ -1,5 +1,5 @@
 from application import application_instance, db
-from application.forms import LoginForm, RegistrationForm
+from application.forms import LoginForm, RegistrationForm, EditProfileForm
 from application.models import User
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
@@ -79,7 +79,6 @@ def register():
 
 
 @application_instance.route('/user/<username>')
-@login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = [
@@ -91,3 +90,25 @@ def user(username):
         {'author': user, 'title': 'Test post title 6', 'body': 'Test post body 6'},
     ]
     return render_template('user.html', title='User Profile', user=user, posts=posts)
+
+
+@application_instance.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.about_me = form.about_me.data
+        current_user.username = form.username.data
+        current_user.skype = form.skype.data
+        current_user.facebook = form.facebook.data
+        current_user.telegram = form.telegram.data
+        db.session.commit()
+        flash('Form has been saved.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.about_me.data = current_user.about_me
+        form.username.data = current_user.username
+        form.skype.data = current_user.skype
+        form.facebook.data = current_user.facebook
+        form.telegram.data = current_user.telegram
+    return render_template('edit_profile.html', title="Edit Profile", form=form)

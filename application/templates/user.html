@@ -7,16 +7,34 @@
     <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar">
 
     {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
-    {% if user.skype %}Skype: {{ user.skype }}<br>{% endif %}
+
+    {% if user.skype %}
+        <b>Skype:</b>
+        <a href="skype:{{ user.skype }}?call">{{ user.skype }}</a><br>
+    {% endif %}
+
     {% if user.telegram %}
-        Telegram:
+        <b>Telegram:</b>
         <a href="https://t.me/{{ user.telegram }}" target="_blank">
             {{ user.telegram }}
         </a><br>
     {% endif %}
-    {% if user.facebook %}Facebook: {{ user.facebook }}<br>{% endif %}
 
-    {% if user.about_me %}About Me: {{ user.about_me }}<br>{% endif %}
+    {% if user.facebook %}
+        <b>Facebook:</b>
+        <a href="https://www.facebook.com/{{ user.facebook }}" target="_blank">
+            {{ user.facebook }}
+        </a><br>
+    {% endif %}
+
+    {% if user.about_me %}
+        <b>About Me:</b>
+        {{ user.about_me }}<br>
+    {% endif %}
+
+    {% if current_user == user %}
+        <a href="{{ url_for('edit_profile') }}">Edit Profile?</a>
+    {% endif %}
 
     <hr>
     {% if posts %}

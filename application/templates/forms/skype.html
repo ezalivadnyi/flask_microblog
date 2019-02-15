@@ -1,0 +1,9 @@
+<div class="form-group row">
+    {{ form.skype.label(class='col-form-label') }}
+    <div class="col-sm-10">
+        {{ form.skype(size=32, class='form-control') }}
+        {% for error in form.skype.errors %}
+            <small class="form-text text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+</div>
