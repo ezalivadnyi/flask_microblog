@@ -11,4 +11,4 @@ migrate = Migrate(application_instance, db)
 login = LoginManager(application_instance)
 login.login_view = 'login'
 
-from application import routes, models
+from application import routes, models, errors
