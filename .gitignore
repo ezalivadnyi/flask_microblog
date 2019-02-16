@@ -1,3 +1,4 @@
 /.idea
 /venv
+/logs
 microblog_sqlite.db
