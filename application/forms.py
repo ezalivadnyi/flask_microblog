@@ -32,9 +32,9 @@ class RegistrationForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    telegram = StringField('Telegram username (without @ symbol!)', validators=[Length(max=32)])
+    telegram = StringField('Telegram', validators=[Length(max=32)])
     skype = StringField('Skype', validators=[Length(max=32)])
-    facebook = StringField('Facebook username (will be added after https://www.facebook.com/...)', validators=[Length(max=140)])
+    facebook = StringField('Facebook', validators=[Length(max=140)])
     about_me = TextAreaField('About Me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Save')
 

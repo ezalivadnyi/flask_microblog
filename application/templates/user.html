@@ -4,7 +4,7 @@
     <h1>{{ title + ": " + user.username }}</h1>
     <hr>
 
-    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar">
+    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar" title="{{ current_user.username }} Gravatar">
 
     {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
 
