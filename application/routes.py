@@ -24,16 +24,7 @@ def index():
         db.session.commit()
         flash('Your post was saved in database!')
         return redirect(url_for('index'))
-    posts = [
-        {
-            'author': {'username': "John Lennon"},
-            'body': "Let's see how it works."
-        },
-        {
-            'author': {'username': 'Britney Spears'},
-            'body': "Oh baby, baby! I'm rock!"
-        }
-    ]
+    posts = current_user.followed_posts().all()
     return render_template('index.html', title='Home', posts=posts, form=form)
 
 
