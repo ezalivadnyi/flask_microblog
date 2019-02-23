@@ -1,7 +1,7 @@
 <div class="form-group row">
     {{ form.post_title.label(class='col-form-label') }}
     <div class="col-sm-10">
-        {{ form.post_title(size=32, placeholder='Enter post title here (max 60 chars)', class='form-control') }}
+        {{ form.post_title(size=32, maxlength=60, placeholder='Enter post title here (max 60 chars)', class='form-control') }}
         {% for error in form.post_title.errors %}
             <small class="form-text text-danger">{{ error }}</small>
         {% endfor %}

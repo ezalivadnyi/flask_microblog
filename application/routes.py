@@ -24,7 +24,10 @@ def index():
         db.session.commit()
         flash('Your post was saved in database!')
         return redirect(url_for('index'))
-    posts = current_user.followed_posts().all()
+    if current_user.is_authenticated:
+        posts = current_user.followed_posts().all()
+    else:
+        posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template('index.html', title='Home', posts=posts, form=form)
 
 
@@ -79,14 +82,7 @@ def register():
 @application_instance.route('/user/<username>')
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'title': 'shshshshshsh shshshshshsh  shshshshshsh  shshshshshsh  shshshshshsh shshshshshshs hshshshshsh shshshshs', 'body': 'Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 Test post body 1 '},
-        {'author': user, 'title': 'Test post title 2', 'body': 'Test post body 2'},
-        {'author': user, 'title': 'Test post title 3', 'body': 'Test post body 3'},
-        {'author': user, 'title': 'Test post title 4', 'body': 'Test post body 4'},
-        {'author': user, 'title': 'Test post title 5', 'body': 'Test post body 5'},
-        {'author': user, 'title': 'Test post title 6', 'body': 'Test post body 6'},
-    ]
+    posts = Post.query.filter_by(author=user).order_by(Post.timestamp.desc()).all()
     return render_template('user.html', title='User Profile', user=user, posts=posts)
 
 
@@ -142,3 +138,32 @@ def unfollow(username):
     db.session.commit()
     flash('You are not following {}'.format(username))
     return redirect(url_for('user', username=username))
+
+
+@application_instance.route('/explore')
+def explore():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html', title='Explore', posts=posts)
+
+
+@application_instance.route('/post/<id>')
+def post(id):
+    post = Post.query.filter_by(id=id).first_or_404()
+    return render_template('post_detail.html', post=post)
+
+
+@application_instance.route('/post/<id>/delete', methods=['GET', 'POST'])
+@login_required
+def post_delete(id):
+    post = Post.query.filter_by(id=id).first()
+    if post is None:
+        flash('Post with id {} not found :('.format(id))
+        return redirect(url_for('index'))
+    if post.author != current_user:
+        flash('You are not author of this post!')
+        return redirect(url_for('post', id=id))
+    elif post.author == current_user:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post {} ({}) deleted.'.format(id, post.title))
+        return redirect(url_for('index'))

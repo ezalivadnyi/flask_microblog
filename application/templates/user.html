@@ -35,28 +35,25 @@
     <div>{{ user.followers.count() }} followers</div>
     <div>{{ user.followed.count() }} following</div>
 
-    {% if current_user == user %}
-        <a class="btn btn-primary"  href="{{ url_for('edit_profile') }}">Edit Profile</a>
-    {% elif not current_user.is_following(user) %}
-        <a class="btn btn-success" href="{{ url_for('follow', username=user.username) }}">Follow</a>
+    {% if current_user.is_authenticated %}
+        {% if current_user == user %}
+            <a class="btn btn-primary"  href="{{ url_for('edit_profile') }}">Edit Profile</a>
+        {% elif not current_user.is_following(user) %}
+            <a class="btn btn-success" href="{{ url_for('follow', username=user.username) }}">Follow</a>
+        {% else %}
+            <a class="btn btn-danger" href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
+        {% endif %}
     {% else %}
-        <a class="btn btn-danger" href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
+            <a class="btn btn-success" href="{{ url_for('login') }}">Follow</a>
     {% endif %}
 
 
     <hr>
     {% if posts %}
-        <h2>Latest posts:</h2>
+        <h2>Latest {{ user.username }}'s posts</h2>
         <div class="list-group">
             {% for post in posts %}
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{ post.title }}</h5>
-                      <small>3 days ago</small>
-                    </div>
-                    <p class="mb-1">{{ post.body }}</p>
-                    {#<small>Donec id elit non mi porta.</small>#}
-                </a>
+                {% include '_post_item.html' %}
             {% endfor %}
         </div>
     {% endif %}
