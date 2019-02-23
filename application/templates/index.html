@@ -3,6 +3,17 @@
 {% block content %}
     <h1>Hello, {{ current_user.username }}</h1>
     <hr>
+
+    {% if current_user.is_authenticated %}
+        <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {% include 'forms/post_title.html' %}
+        {% include 'forms/post_body.html' %}
+        {% include 'forms/submit.html' %}
+        </form>
+        <hr>
+    {% endif %}
+
     {% for post in posts %}
     <p><b>{{ post.author.username }}</b> says: {{ post.body }}</p>
     {% endfor %}

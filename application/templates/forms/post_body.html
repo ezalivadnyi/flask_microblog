@@ -1,0 +1,9 @@
+<div class="form-group row">
+    {{ form.post_body.label(class='col-form-label') }}
+    <div class="col-sm-10">
+        {{ form.post_body(cols=32, rows=4, placeholder='Please tell us something interesting!', class='form-control') }}
+        {% for error in form.post_body.errors %}
+            <small class="form-text text-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+</div>

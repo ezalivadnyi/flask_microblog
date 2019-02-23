@@ -1,6 +1,6 @@
 from application import application_instance, db
-from application.forms import LoginForm, RegistrationForm, EditProfileForm
-from application.models import User
+from application.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from application.models import User, Post
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -14,9 +14,16 @@ def before_request():
         db.session.commit()
 
 
-@application_instance.route('/')
-@application_instance.route('/index')
+@application_instance.route('/', methods=['GET', 'POST'])
+@application_instance.route('/index', methods=['GET', 'POST'])
 def index():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.post_title.data, body=form.post_body.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post was saved in database!')
+        return redirect(url_for('index'))
     posts = [
         {
             'author': {'username': "John Lennon"},
@@ -27,7 +34,7 @@ def index():
             'body': "Oh baby, baby! I'm rock!"
         }
     ]
-    return render_template('index.html', title='Home', posts=posts)
+    return render_template('index.html', title='Home', posts=posts, form=form)
 
 
 @application_instance.route('/login', methods=['GET', 'POST'])
