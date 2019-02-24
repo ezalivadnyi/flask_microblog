@@ -24,11 +24,37 @@ def index():
         db.session.commit()
         flash('Your post was saved in database!')
         return redirect(url_for('index'))
+    page = request.args.get('page', 1, type=int)
     if current_user.is_authenticated:
-        posts = current_user.followed_posts().all()
-    else:
-        posts = Post.query.order_by(Post.timestamp.desc()).all()
-    return render_template('index.html', title='Home', posts=posts, form=form)
+        posts = current_user.followed_posts().paginate(
+            page, application_instance.config['POSTS_PER_PAGE'], False)
+    elif current_user.is_anonymous:
+        posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
+            page, application_instance.config['POSTS_PER_PAGE', False]
+        )
+    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    return render_template('index.html',
+                           title='Home',
+                           posts=posts.items,
+                           form=form,
+                           next_url=next_url,
+                           prev_url=prev_url)
+
+
+@application_instance.route('/explore')
+def explore():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
+        page, application_instance.config['POSTS_PER_PAGE'], False
+    )
+    next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
+    return render_template('index.html',
+                           title='Explore',
+                           posts=posts.items,
+                           next_url=next_url,
+                           prev_url=prev_url)
 
 
 @application_instance.route('/login', methods=['GET', 'POST'])
@@ -82,8 +108,17 @@ def register():
 @application_instance.route('/user/<username>')
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user).order_by(Post.timestamp.desc()).all()
-    return render_template('user.html', title='User Profile', user=user, posts=posts)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(author=user, deleted=False).order_by(Post.timestamp.desc()).paginate(
+        page, application_instance.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('user', username=username, page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('user', username=username, page=posts.prev_num) if posts.has_prev else None
+    return render_template('user.html',
+                           title='User Profile',
+                           user=user,
+                           posts=posts.items,
+                           prev_url=prev_url,
+                           next_url=next_url)
 
 
 @application_instance.route('/edit_profile', methods=['GET', 'POST'])
@@ -97,15 +132,15 @@ def edit_profile():
         current_user.facebook = form.facebook.data
         current_user.telegram = form.telegram.data
         db.session.commit()
-        flash('Form has been saved.')
-        return redirect(url_for('edit_profile'))
+        flash('Edit profile form has been saved.')
+        return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.about_me.data = current_user.about_me
         form.username.data = current_user.username
         form.skype.data = current_user.skype
         form.facebook.data = current_user.facebook
         form.telegram.data = current_user.telegram
-    return render_template('edit_profile.html', title="Edit Profile", form=form)
+    return render_template('edit_profile.html', title="Edit Profile Data", form=form)
 
 
 @application_instance.route('/follow/<username>')
@@ -140,12 +175,6 @@ def unfollow(username):
     return redirect(url_for('user', username=username))
 
 
-@application_instance.route('/explore')
-def explore():
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
-    return render_template('index.html', title='Explore', posts=posts)
-
-
 @application_instance.route('/post/<id>')
 def post(id):
     post = Post.query.filter_by(id=id).first_or_404()
@@ -163,7 +192,7 @@ def post_delete(id):
         flash('You are not author of this post!')
         return redirect(url_for('post', id=id))
     elif post.author == current_user:
-        db.session.delete(post)
+        post.deleted = True
         db.session.commit()
         flash('Post {} ({}) deleted.'.format(id, post.title))
         return redirect(url_for('index'))

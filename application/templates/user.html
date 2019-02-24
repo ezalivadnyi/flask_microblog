@@ -47,8 +47,8 @@
             <a class="btn btn-success" href="{{ url_for('login') }}">Follow</a>
     {% endif %}
 
-
     <hr>
+
     {% if posts %}
         <h2>Latest {{ user.username }}'s posts</h2>
         <div class="list-group">
@@ -57,4 +57,7 @@
             {% endfor %}
         </div>
     {% endif %}
+
+    {% include '_pagination.html' %}
+
 {% endblock %}

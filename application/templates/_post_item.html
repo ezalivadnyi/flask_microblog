@@ -1,9 +1,19 @@
 <div class="card text-dark bg-light">
         <div class="card-body">
+
             <h4 class="card-title">
-                <a href="{{ url_for('post', id=post.id) }}">{{ post.title }}</a>
+                <a href="{{ url_for('post', id=post.id) }}">
+                    {{ post.title }}
+                </a>
+                {% if current_user == post.author %}
+                    <button type="button" class="close" aria-label="Close">
+                        <a href="{{ url_for('post_delete', id=post.id) }}" title="Delete this post">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </button>
+                {% endif %}
             </h4>
-            <a href="{{ url_for('post_delete', id=post.id) }}" title="Delete this post">X</a>
+
             <p class="card-text">{{ post.body|truncate }}</p>
         </div>
         <div class="card-footer">
