@@ -4,48 +4,63 @@
     <h1>{{ title + ": " + user.username }}</h1>
     <hr>
 
-    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar" title="{{ current_user.username }} Gravatar">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td class="text-center">
+                    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar" title="{{ current_user.username }} Gravatar">
 
-    {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
+                    <div class="text-center">{{ user.followers.count() }} followers</div>
+                    <div class="text-center">{{ user.followed.count() }} following</div>
 
-    {% if user.skype %}
-        <b>Skype:</b>
-        <a href="skype:{{ user.skype }}?call">{{ user.skype }}</a><br>
-    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        {% if current_user == user %}
+                            <a class="btn btn-primary"  href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                        {% elif not current_user.is_following(user) %}
+                            <a class="btn btn-success" href="{{ url_for('follow', username=user.username) }}">Follow</a>
+                        {% else %}
+                            <a class="btn btn-danger" href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
+                        {% endif %}
+                    {% else %}
+                            <a class="btn btn-success" href="{{ url_for('login') }}">Follow</a>
+                    {% endif %}
 
-    {% if user.telegram %}
-        <b>Telegram:</b>
-        <a href="https://t.me/{{ user.telegram }}" target="_blank">
-            {{ user.telegram }}
-        </a><br>
-    {% endif %}
+                </td>
+                <td>
 
-    {% if user.facebook %}
-        <b>Facebook:</b>
-        <a href="https://www.facebook.com/{{ user.facebook }}" target="_blank">
-            {{ user.facebook }}
-        </a><br>
-    {% endif %}
 
-    {% if user.about_me %}
-        <b>About Me:</b>
-        {{ user.about_me }}<br>
-    {% endif %}
+                    {% if user.skype %}
+                        <b>Skype:</b>
+                        <a href="skype:{{ user.skype }}?call">{{ user.skype }}</a><br>
+                    {% endif %}
 
-    <div>{{ user.followers.count() }} followers</div>
-    <div>{{ user.followed.count() }} following</div>
+                    {% if user.telegram %}
+                        <b>Telegram:</b>
+                        <a href="https://t.me/{{ user.telegram }}" target="_blank">
+                            {{ user.telegram }}
+                        </a><br>
+                    {% endif %}
 
-    {% if current_user.is_authenticated %}
-        {% if current_user == user %}
-            <a class="btn btn-primary"  href="{{ url_for('edit_profile') }}">Edit Profile</a>
-        {% elif not current_user.is_following(user) %}
-            <a class="btn btn-success" href="{{ url_for('follow', username=user.username) }}">Follow</a>
-        {% else %}
-            <a class="btn btn-danger" href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
-        {% endif %}
-    {% else %}
-            <a class="btn btn-success" href="{{ url_for('login') }}">Follow</a>
-    {% endif %}
+                    {% if user.facebook %}
+                        <b>Facebook:</b>
+                        <a href="https://www.facebook.com/{{ user.facebook }}" target="_blank">
+                            {{ user.facebook }}
+                        </a><br>
+                    {% endif %}
+                    <br>
+
+                    {% if user.about_me %}
+                        <b>About Me:</b>
+                        {{ user.about_me }}<br>
+                    {% endif %}
+                    <br>
+                    {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
+
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
 
     <hr>
 

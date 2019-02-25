@@ -1,9 +1,7 @@
-<div class="form-group row">
+<div class="form-group">
     {{ form.facebook.label(class='col-form-label') }}
-    <div class="col-sm-10">
-        {{ form.facebook(size=32, class='form-control', placeholder='Only username! It will be concatenated with https://www.facebook.com/...') }}
-        {% for error in form.facebook.errors %}
-            <small class="form-text text-danger">{{ error }}</small>
-        {% endfor %}
-    </div>
+    {{ form.facebook(size=32, class='form-control', placeholder='Only username! It will be concatenated with https://www.facebook.com/...') }}
+    {% for error in form.facebook.errors %}
+        <small class="form-text text-danger">{{ error }}</small>
+    {% endfor %}
 </div>
