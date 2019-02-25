@@ -10,4 +10,5 @@
         {% include 'forms/submit.html' %}
     </form>
     <p>New User? <a href="{{ url_for('register') }}">Click here to Register!</a></p>
+    <p>Forgot Your Password? <a href="{{ url_for('reset_password_request') }}">Click here to reset it</a></p>
 {% endblock%}

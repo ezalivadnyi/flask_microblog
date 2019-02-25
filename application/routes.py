@@ -1,6 +1,7 @@
 from application import application_instance, db
-from application.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from application.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from application.models import User, Post
+from application.email import send_password_reset_email
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -30,8 +31,7 @@ def index():
             page, application_instance.config['POSTS_PER_PAGE'], False)
     elif current_user.is_anonymous:
         posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
-            page, application_instance.config['POSTS_PER_PAGE', False]
-        )
+            page, application_instance.config['POSTS_PER_PAGE'], False)
     next_url = url_for('index', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html',
@@ -46,8 +46,7 @@ def index():
 def explore():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
-        page, application_instance.config['POSTS_PER_PAGE'], False
-    )
+        page, application_instance.config['POSTS_PER_PAGE'], False)
     next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html',
@@ -103,6 +102,36 @@ def register():
         flash('You was automatically logged in with your credentials.')
         return redirect(url_for('index'))
     return render_template('register.html', title='Registration', form=form)
+
+
+@application_instance.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password.')
+        return redirect(url_for('login'))
+    return render_template('request_password_reset.html', title='Request New Password', form=form)
+
+
+@application_instance.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password was successfully changed.')
+        return redirect(url_for('index'))
+    return render_template('reset_password.html', title='Reset Password', form=form)
 
 
 @application_instance.route('/user/<username>')
