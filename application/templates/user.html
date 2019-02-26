@@ -4,7 +4,7 @@
     <h1>{{ title + ": " + user.username }}</h1>
     <hr>
 
-    <table class="table table-hover">
+    <table class="table">
         <tbody>
             <tr>
                 <td class="text-center">
@@ -28,6 +28,11 @@
                 </td>
                 <td>
 
+                    {% if user.about_me %}
+                        <b>About Me:</b>
+                        {{ user.about_me }}<br>
+                    {% endif %}
+                    <br>
 
                     {% if user.skype %}
                         <b>Skype:</b>
@@ -49,11 +54,6 @@
                     {% endif %}
                     <br>
 
-                    {% if user.about_me %}
-                        <b>About Me:</b>
-                        {{ user.about_me }}<br>
-                    {% endif %}
-                    <br>
                     {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
 
                 </td>
