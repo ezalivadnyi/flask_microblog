@@ -5,9 +5,11 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         {% include 'forms/username.html' %}
+        <br>
         {% include 'forms/skype.html' %}
         {% include 'forms/telegram.html' %}
         {% include 'forms/facebook.html' %}
+        <br>
         {% include 'forms/about_me.html' %}
         {% include 'forms/submit.html' %}
     </form>

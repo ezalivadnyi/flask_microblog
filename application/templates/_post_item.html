@@ -21,7 +21,7 @@
                 <img src="{{ post.author.avatar(30) }}" alt="">
                 <b>{{ post.author.username }}</b>
             </a>
-            <span class="text-right"> date {{ post.timestamp }}</span>
+            <span class="text-right"> {{ moment(post.timestamp).fromNow() }}</span>
         </div>
     </div>
     <br>

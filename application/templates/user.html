@@ -8,21 +8,27 @@
         <tbody>
             <tr>
                 <td class="text-center">
-                    <img src="{{ user.avatar(150) }}" alt="{{ current_user.username }} Gravatar" title="{{ current_user.username }} Gravatar">
+                    <img src="{{ user.avatar(150) }}"
+                         alt="{{ current_user.username }} Gravatar"
+                         title="{{ current_user.username }} Gravatar">
 
                     <div class="text-center">{{ user.followers.count() }} followers</div>
                     <div class="text-center">{{ user.followed.count() }} following</div>
 
                     {% if current_user.is_authenticated %}
                         {% if current_user == user %}
-                            <a class="btn btn-primary"  href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                            <a class="btn btn-primary"
+                               href="{{ url_for('edit_profile') }}">Edit Profile</a>
                         {% elif not current_user.is_following(user) %}
-                            <a class="btn btn-success" href="{{ url_for('follow', username=user.username) }}">Follow</a>
+                            <a class="btn btn-success"
+                               href="{{ url_for('follow', username=user.username) }}">Follow</a>
                         {% else %}
-                            <a class="btn btn-danger" href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
+                            <a class="btn btn-danger"
+                               href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
                         {% endif %}
                     {% else %}
-                            <a class="btn btn-success" href="{{ url_for('login') }}">Follow</a>
+                            <a class="btn btn-success"
+                               href="{{ url_for('login') }}">Follow</a>
                     {% endif %}
 
                 </td>
@@ -54,7 +60,7 @@
                     {% endif %}
                     <br>
 
-                    {% if user.last_seen %}Last seen on: {{ user.last_seen }}<br>{% endif %}
+                    {% if user.last_seen %}Last seen on: {{ moment(user.last_seen).fromNow() }}{% endif %}
 
                 </td>
             </tr>
