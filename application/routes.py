@@ -32,12 +32,18 @@ def index():
     elif current_user.is_anonymous:
         posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
             page, application_instance.config['POSTS_PER_PAGE'], False)
+    first_url = url_for('index', page=1)
     next_url = url_for('index', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    last_url = url_for('index', page=posts.pages)
     return render_template('index.html',
                            title='Home',
                            posts=posts.items,
                            form=form,
+                           pages=posts.pages,
+                           current_page=page,
+                           first_url=first_url,
+                           last_url=last_url,
                            next_url=next_url,
                            prev_url=prev_url)
 
@@ -47,11 +53,17 @@ def explore():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(deleted=False).order_by(Post.timestamp.desc()).paginate(
         page, application_instance.config['POSTS_PER_PAGE'], False)
+    first_url = url_for('explore', page=1)
     next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
+    last_url = url_for('explore', page=posts.pages)
     return render_template('index.html',
                            title='Explore',
                            posts=posts.items,
+                           pages=posts.pages,
+                           current_page=page,
+                           first_url=first_url,
+                           last_url=last_url,
                            next_url=next_url,
                            prev_url=prev_url)
 
@@ -121,9 +133,11 @@ def reset_password_request():
 @application_instance.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
+        flash('You must logout before reset your password!')
         return redirect(url_for('index'))
     user = User.verify_reset_password_token(token)
     if not user:
+        flash('Incorrect or expired token. Please try again.')
         return redirect(url_for('index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
