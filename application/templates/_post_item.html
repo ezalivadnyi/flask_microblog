@@ -6,8 +6,8 @@
                     {{ post.title }}
                 </a>
                 {% if current_user == post.author %}
-                    <button type="button" class="close" aria-label="Close">
-                        <a href="{{ url_for('post_delete', id=post.id) }}" title="Delete this post">
+                    <button type="button" class="close" aria-label="{{ _('Delete') }}">
+                        <a href="{{ url_for('post_delete', id=post.id) }}" title="{{ _('Delete this post') }}">
                             <span aria-hidden="true">&times;</span>
                         </a>
                     </button>
@@ -17,7 +17,7 @@
             <p class="card-text">{{ post.body|truncate }}</p>
         </div>
         <div class="card-footer">
-            Author: <a href="{{ url_for('user', username=post.author.username) }}">
+            {{ _('Author') }}: <a href="{{ url_for('user', username=post.author.username) }}">
                 <img src="{{ post.author.avatar(30) }}" alt="">
                 <b>{{ post.author.username }}</b>
             </a>

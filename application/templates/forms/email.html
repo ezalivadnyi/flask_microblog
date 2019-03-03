@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ form.email.label(class='col-form-label') }}
-    {{ form.email(size=64, class='form-control', autofocus=True) }}
+    {{ form.email(size=64, type='email', class='form-control', autofocus=True) }}
     {% for error in form.email.errors %}
         <small class="form-text text-danger">{{ error }}</small>
     {% endfor %}

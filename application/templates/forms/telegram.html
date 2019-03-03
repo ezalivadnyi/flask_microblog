@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ form.telegram.label(class='col-form-label') }}
-    {{ form.telegram(size=32, class='form-control', placeholder='Only username, without @ symbol at begin!') }}
+    {{ form.telegram(size=32, class='form-control', placeholder=_('Only username, without @ symbol at begin!')) }}
     {% for error in form.telegram.errors %}
         <small class="form-text text-danger">{{ error }}</small>
     {% endfor %}

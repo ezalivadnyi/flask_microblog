@@ -1,5 +1,6 @@
 from application import application_instance, db
 from application.models import Post, User
+from application import cli
 
 
 # Automatically add objects from dictionary to shell context.

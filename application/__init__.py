@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
+from flask_babel import Babel, lazy_gettext as _l
 from config import Config
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
@@ -15,8 +16,16 @@ mail = Mail(application_instance)
 db = SQLAlchemy(application_instance)
 migrate = Migrate(application_instance, db)
 moment = Moment(application_instance)
+babel = Babel(application_instance)
 login = LoginManager(application_instance)
 login.login_view = 'login'
+login.login_message = _l('Please login to access this page.')
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(application_instance.config['LANGUAGES'])
+
 
 if not application_instance.debug:
     # Logging errors by email
@@ -31,7 +40,7 @@ if not application_instance.debug:
             mailhost=(application_instance.config['MAIL_SERVER'], application_instance.config['MAIL_PORT']),
             fromaddr='no-reply@' + application_instance.config['MAIL_SERVER'],
             toaddrs=application_instance.config['MAIL_ADMINS'],
-            subject='Microblog Failure Report',
+            subject=_l('Microblog Failure Report'),
             credentials=auth,
             secure=secure
         )

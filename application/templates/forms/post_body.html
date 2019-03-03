@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ form.post_body.label(class='col-form-label') }}
-    {{ form.post_body(cols=32, rows=4, placeholder='Please tell us something interesting!', class='form-control') }}
+    {{ form.post_body(cols=32, rows=4, placeholder=_('Please tell us something interesting!'), class='form-control') }}
     {% for error in form.post_body.errors %}
         <small class="form-text text-danger">{{ error }}</small>
     {% endfor %}

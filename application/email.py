@@ -1,6 +1,7 @@
 from application import application_instance, mail
 from flask import render_template
 from flask_mail import Message
+from flask_babel import _
 from threading import Thread
 
 
@@ -19,7 +20,7 @@ def send_mail(subject, sender, recipients, text_body, html_body):
 def send_password_reset_email(user):
     token = user.get_reset_password_token()
     send_mail(
-        application_instance.config['APPLICATION_NAME'] + ' Reset Your Password Confirmation',
+        application_instance.config['APPLICATION_NAME'] + _(' Reset Your Password Confirmation'),
         sender=application_instance.config['MAIL_ADMINS'],
         recipients=[user.email],
         text_body=render_template(

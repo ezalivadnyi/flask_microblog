@@ -2,23 +2,23 @@
 
 {% block content %}
     {% if current_user.is_authenticated and form %}
-        <h1>Hello, {{ current_user.username }}</h1>
+        <h1>{{ _('Hello') }}, {{ current_user.username }}</h1>
     {% elif current_user.is_anonymous %}
-        <h1>Hello Guest</h1>
-        <small>Please login to make new posts and follow other users.</small>
+        <h1>{{ _('Hello') }} {{ _('Guest') }}</h1>
+        <small>{{ _('Please login to make new posts and follow other users.') }}</small>
     {% endif %}
 
     <hr>
 
     <div class="d-flex justify-content-between align-items-center">
         <div class="blog-post-meta">
-            Author:
+            {{ _('Author') }}:
             <a href="{{ url_for('user', username=post.author.username) }}">
                 <img src="{{ post.author.avatar(30) }}" alt="">
                 <b>{{ post.author.username }}</b>
             </a>
         </div>
-        <div>Published: {{ moment(post.timestamp).fromNow() }}</div>
+        <div>{{ _('Published') }}: {{ moment(post.timestamp).fromNow() }}</div>
         {% if current_user == post.author %}
             <button type="button" class="close" aria-label="Close">
                 <a href="{{ url_for('post_delete', id=post.id) }}" title="Delete this post">

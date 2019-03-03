@@ -1,0 +1,437 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-03-03 12:20+0200\n"
+"PO-Revision-Date: 2019-03-03 10:15+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: application/__init__.py:22
+msgid "Please login to access this page."
+msgstr "Войдите, чтобы прочитать эту страницу."
+
+#: application/__init__.py:43
+msgid "Microblog Failure Report"
+msgstr "Microblog отчёт об ошибке"
+
+#: application/email.py:23
+msgid " Reset Your Password Confirmation"
+msgstr " Подтверждение Сброса Пароля"
+
+#: application/forms.py:9 application/forms.py:16 application/forms.py:35
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: application/forms.py:10 application/forms.py:18
+msgid "Password"
+msgstr "Пароль"
+
+#: application/forms.py:11
+msgid "Remember Me"
+msgstr "Запомнить меня"
+
+#: application/forms.py:12 application/routes.py:84 application/routes.py:93
+msgid "Sign In"
+msgstr "Войти"
+
+#: application/forms.py:17 application/forms.py:60
+msgid "Email"
+msgstr ""
+
+#: application/forms.py:19 application/forms.py:66
+msgid "Repeat Password"
+msgstr "Повторите пароль"
+
+#: application/forms.py:21
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: application/forms.py:26
+msgid "Please use a different username."
+msgstr "Используйте другое имя пользователя."
+
+#: application/forms.py:31
+msgid "Please use a different email address."
+msgstr "Используйте другой email."
+
+#: application/forms.py:39 application/templates/user.html:38
+msgid "About Me"
+msgstr "Обо мне"
+
+#: application/forms.py:40
+msgid "Save"
+msgstr "Сохранить"
+
+#: application/forms.py:50
+msgid "This username is already in use. Please chose another."
+msgstr "Это имя пользователя занято. Используйте другое."
+
+#: application/forms.py:54
+msgid "Title"
+msgstr "Заголовок"
+
+#: application/forms.py:55
+msgid "Body"
+msgstr "Содержание"
+
+#: application/forms.py:56
+msgid "Post it!"
+msgstr "Опубликовать!"
+
+#: application/forms.py:61
+msgid "Request Password Reset"
+msgstr "Запросить сброс пароля"
+
+#: application/forms.py:65
+msgid "New Password"
+msgstr "Новый пароль"
+
+#: application/forms.py:67
+msgid "Set This New Password"
+msgstr "Установить этот пароль"
+
+#: application/routes.py:27
+msgid "Your post was saved in database!"
+msgstr "Ваша публикация сохранена в базе данных!"
+
+#: application/routes.py:41 application/templates/base.html:25
+msgid "Home"
+msgstr "Главная"
+
+#: application/routes.py:62 application/templates/base.html:29
+msgid "Explore"
+msgstr "Все публикации"
+
+#: application/routes.py:75 application/routes.py:105
+msgid "You have already authenticated and redirected to index page."
+msgstr "Вы уже вошли и переадресованы на главную"
+
+#: application/routes.py:83
+msgid "Invalid username or password! Try again. :("
+msgstr "Неверное имя пользователя или пароль. Попробуйте еще раз. :("
+
+#: application/routes.py:87
+msgid "Login successful. Welcome back! :)"
+msgstr "Вход успешен. С возвращением! :)"
+
+#: application/routes.py:113
+msgid "Congratulations, you are now a registered user!"
+msgstr "Поздравляем, вы теперь зарегистрированный пользователь!"
+
+#: application/routes.py:115
+msgid "You was automatically logged in with your credentials."
+msgstr "Вы автоматически переадресованы с вашими данными пользователя."
+
+#: application/routes.py:117
+msgid "Registration"
+msgstr "Регистрация"
+
+#: application/routes.py:129
+msgid "Check your email for the instructions to reset your password."
+msgstr "Проверьте вашу почту для дальнейших инструкций по сбросу пароля."
+
+#: application/routes.py:131
+msgid "Request New Password"
+msgstr "Запросить новый пароль"
+
+#: application/routes.py:137
+msgid "You must logout before reset your password!"
+msgstr "Чтоюы сбросить пароль, сперва нужно выйти!"
+
+#: application/routes.py:141
+msgid "Incorrect or expired token. Please try again."
+msgstr "Неверный либо просроченный токен. Попробуйте еще раз."
+
+#: application/routes.py:147
+msgid "Your password was successfully changed."
+msgstr "Пароль успешно изменён."
+
+#: application/routes.py:149
+msgid "Reset Password"
+msgstr "Сбросить пароль"
+
+#: application/routes.py:163
+msgid "User Profile"
+msgstr "Профиль пользователя"
+
+#: application/routes.py:184
+msgid "Edit profile form has been saved."
+msgstr "Форма редактирования пользователя сохранена."
+
+#: application/routes.py:192
+msgid "Edit Profile Data"
+msgstr "Изменение данных профиля"
+
+#: application/routes.py:200 application/routes.py:216
+#, python-format
+msgid "User %(username)s not found."
+msgstr "Пользователь %(username)s не найден."
+
+#: application/routes.py:203
+msgid "You cannot follow yourself!"
+msgstr "Нельзя подписаться на себя!"
+
+#: application/routes.py:207
+#, python-format
+msgid "You are following %(username)s now!"
+msgstr "Вы отписались от %(username)s!"
+
+#: application/routes.py:219
+msgid "You cannot unfollow yourself!"
+msgstr "Нельзя отписаться от себя!"
+
+#: application/routes.py:223
+#, python-format
+msgid "You are not following %(username)s"
+msgstr "Вы не подписаны на %(username)s"
+
+#: application/routes.py:238
+#, python-format
+msgid "Post with id %(id)s not found :("
+msgstr "Публикация с id %(id)s не найдена :("
+
+#: application/routes.py:241
+msgid "You are not author of this post!"
+msgstr "Вы не автор этой публикации!"
+
+#: application/routes.py:246
+#, python-format
+msgid "Post %(id)s (%(title)s) deleted."
+msgstr "Публикация %(id)s (%(title)s) удалена."
+
+#: application/templates/404.html:4 application/templates/404.html:7
+#: application/templates/500.html:4 application/templates/500.html:9
+msgid "Error"
+msgstr "Ошибка"
+
+#: application/templates/404.html:5
+msgid "Page Not Found"
+msgstr "Страница не найдена"
+
+#: application/templates/500.html:5
+msgid "An unexpected error has occurred."
+msgstr "Возникла непредвиденная ошибка."
+
+#: application/templates/500.html:6
+msgid "The administrator has been notified."
+msgstr "Администратор был уведомлён."
+
+#: application/templates/500.html:7
+msgid "Sorry for the inconvenience!"
+msgstr "Извините за неудобства!"
+
+#: application/templates/_pagination.html:1
+msgid "Page navigation"
+msgstr "Навигация по странице"
+
+#: application/templates/_pagination.html:8
+msgid "Previous Page"
+msgstr "Предыдущая страница"
+
+#: application/templates/_pagination.html:9
+#: application/templates/_pagination.html:11
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: application/templates/_pagination.html:19
+msgid "First Page"
+msgstr "Первая страница"
+
+#: application/templates/_pagination.html:29
+msgid "Current Page"
+msgstr "Текущая страница"
+
+#: application/templates/_pagination.html:39
+msgid "Last Page"
+msgstr "Последняя страница"
+
+#: application/templates/_pagination.html:48
+msgid "Next Page"
+msgstr "Следующая страница"
+
+#: application/templates/_pagination.html:51
+msgid "Next"
+msgstr "Следующая"
+
+#: application/templates/_post_item.html:9
+msgid "Delete"
+msgstr "Удалить"
+
+#: application/templates/_post_item.html:10
+msgid "Delete this post"
+msgstr "Удалить эту публикацию"
+
+#: application/templates/_post_item.html:20
+#: application/templates/post_detail.html:15
+msgid "Author"
+msgstr "Автор"
+
+#: application/templates/base.html:8
+msgid "Welcome to "
+msgstr "Добро пожаловать в "
+
+#: application/templates/base.html:26
+msgid "Login"
+msgstr "Войти"
+
+#: application/templates/base.html:28
+msgid "Feed"
+msgstr "Лента"
+
+#: application/templates/base.html:30
+msgid "Profile"
+msgstr "Профиль"
+
+#: application/templates/base.html:31
+msgid "Logout"
+msgstr "Выйти"
+
+#: application/templates/index.html:5 application/templates/post_detail.html:5
+#: application/templates/post_detail.html:7
+msgid "Hello"
+msgstr "Здравствуйте"
+
+#: application/templates/index.html:8
+msgid "Here you can find posts from all the users of this website."
+msgstr "Здесь вы можете найти публикации от всех пользователей этого сайта."
+
+#: application/templates/index.html:10 application/templates/post_detail.html:7
+msgid "Guest"
+msgstr "Гость"
+
+#: application/templates/index.html:11
+msgid ""
+"Please login to make new posts, follow other users and achieve another "
+"features."
+msgstr ""
+"Пожалуйста войдите чтобы делать новые публикации, подписываться на других"
+" пользователей и получить другие преимущества."
+
+#: application/templates/index.html:16
+msgid "Create New Post"
+msgstr "Создать новую публикацию"
+
+#: application/templates/index.html:29
+msgid "Latest Posts"
+msgstr "Последние публикации"
+
+#: application/templates/index.html:36
+msgid "Nothing to show."
+msgstr "Нечего показать."
+
+#: application/templates/login.html:12
+msgid "New User?"
+msgstr "Новый пользователь?"
+
+#: application/templates/login.html:14
+msgid "Click here to Register!"
+msgstr "Нажмите здесь, чтобы зарегистрироваться!"
+
+#: application/templates/login.html:17
+msgid "Forgot Your Password?"
+msgstr "Забыли ваш пароль?"
+
+#: application/templates/login.html:19
+msgid "Click here to reset it."
+msgstr "Нажмите здесь, чтобы сбросить его."
+
+#: application/templates/post_detail.html:8
+msgid "Please login to make new posts and follow other users."
+msgstr ""
+"Войдите чтобы создавать публикации и подписываться на других "
+"пользователей."
+
+#: application/templates/post_detail.html:21
+msgid "Published"
+msgstr "Опубликовано"
+
+#: application/templates/request_password_reset.html:5
+msgid "Please enter your email address so we can send you a password reset link."
+msgstr "Введите вашу почту, чтобы мы могли выслать вам ссылку для сброса пароля."
+
+#: application/templates/user.html:15
+msgid "followers"
+msgstr "подписчиков"
+
+#: application/templates/user.html:16
+msgid "following"
+msgstr "отслеживаемых"
+
+#: application/templates/user.html:21
+msgid "Edit Profile"
+msgstr "Редактировать профиль"
+
+#: application/templates/user.html:24 application/templates/user.html:31
+msgid "Follow"
+msgstr "Подписаться"
+
+#: application/templates/user.html:27
+msgid "Unfollow"
+msgstr "Отписаться"
+
+#: application/templates/user.html:63
+msgid "Last seen"
+msgstr "Последний раз заходил"
+
+#: application/templates/user.html:74
+#, python-format
+msgid "Latest %(username)s's posts"
+msgstr "Поледние публикации пользователя %(username)s"
+
+#: application/templates/email/reset_password.html:1
+msgid "Dear"
+msgstr "Уважаемый"
+
+#: application/templates/email/reset_password.html:3
+msgid "To reset your password"
+msgstr "Чтобы сбросить пароль"
+
+#: application/templates/email/reset_password.html:5
+msgid "click here"
+msgstr "нажмите здесь"
+
+#: application/templates/email/reset_password.html:8
+msgid ""
+"Alternatively, you can paste the following link in your browser's address"
+" bar:"
+msgstr "Можете вставить эту ссылку в адресную строку:"
+
+#: application/templates/email/reset_password.html:10
+msgid "If you have not requested a password reset simply ignore this message."
+msgstr "Если вы не запрашивали сброс пароля - проигнорируйте это письмо."
+
+#: application/templates/email/reset_password.html:11
+msgid "Sincerely"
+msgstr "С уважением"
+
+#: application/templates/forms/facebook.html:3
+msgid "Only username! It will be concatenated with https://www.facebook.com/..."
+msgstr ""
+"Только имя пользователя! Оно будет склеено с адресом "
+"https://www.facebook.com/..."
+
+#: application/templates/forms/post_body.html:3
+msgid "Please tell us something interesting!"
+msgstr "Расскажите нам что-нибудь интересное!"
+
+#: application/templates/forms/post_title.html:3
+msgid "Enter post title here (max 60 chars)"
+msgstr "Введите заголовок публикации (максимум 60 символов)"
+
+#: application/templates/forms/telegram.html:3
+msgid "Only username, without @ symbol at begin!"
+msgstr "Только имя пользователя, без символа @ собачки вначале!"
+

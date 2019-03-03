@@ -12,30 +12,30 @@
                          alt="{{ current_user.username }} Gravatar"
                          title="{{ current_user.username }} Gravatar">
 
-                    <div class="text-center">{{ user.followers.count() }} followers</div>
-                    <div class="text-center">{{ user.followed.count() }} following</div>
+                    <div class="text-center">{{ user.followers.count() }} {{ _('followers') }}</div>
+                    <div class="text-center">{{ user.followed.count() }} {{ _('following') }}</div>
 
                     {% if current_user.is_authenticated %}
                         {% if current_user == user %}
                             <a class="btn btn-primary"
-                               href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                               href="{{ url_for('edit_profile') }}">{{ _('Edit Profile') }}</a>
                         {% elif not current_user.is_following(user) %}
                             <a class="btn btn-success"
-                               href="{{ url_for('follow', username=user.username) }}">Follow</a>
+                               href="{{ url_for('follow', username=user.username) }}">{{ _('Follow') }}</a>
                         {% else %}
                             <a class="btn btn-danger"
-                               href="{{ url_for('unfollow', username=user.username ) }}">Unfollow</a>
+                               href="{{ url_for('unfollow', username=user.username ) }}">{{ _('Unfollow') }}</a>
                         {% endif %}
                     {% else %}
                             <a class="btn btn-success"
-                               href="{{ url_for('login') }}">Follow</a>
+                               href="{{ url_for('login') }}">{{ _('Follow') }}</a>
                     {% endif %}
 
                 </td>
                 <td>
 
                     {% if user.about_me %}
-                        <b>About Me:</b>
+                        <b>{{ _('About Me') }}:</b>
                         {{ user.about_me }}<br>
                     {% endif %}
                     <br>
@@ -60,7 +60,7 @@
                     {% endif %}
                     <br>
 
-                    {% if user.last_seen %}Last seen on: {{ moment(user.last_seen).fromNow() }}{% endif %}
+                    {% if user.last_seen %}{{ _('Last seen') }}: {{ moment(user.last_seen).fromNow() }}{% endif %}
 
                 </td>
             </tr>
@@ -71,7 +71,7 @@
     <hr>
 
     {% if posts %}
-        <h2>Latest {{ user.username }}'s posts</h2>
+        <h4>{{ _("Latest %(username)s's posts", username=user.username) }}</h4>
         <div class="list-group">
             {% for post in posts %}
                 {% include '_post_item.html' %}

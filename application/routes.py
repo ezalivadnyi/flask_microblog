@@ -2,8 +2,9 @@ from application import application_instance, db
 from application.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from application.models import User, Post
 from application.email import send_password_reset_email
-from flask import render_template, flash, redirect, url_for, request
+from flask import g, render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_babel import _, get_locale
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -13,6 +14,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+    g.locale = str(get_locale())
 
 
 @application_instance.route('/', methods=['GET', 'POST'])
@@ -23,7 +25,7 @@ def index():
         post = Post(title=form.post_title.data, body=form.post_body.data, author=current_user)
         db.session.add(post)
         db.session.commit()
-        flash('Your post was saved in database!')
+        flash(_('Your post was saved in database!'))
         return redirect(url_for('index'))
     page = request.args.get('page', 1, type=int)
     if current_user.is_authenticated:
@@ -37,7 +39,7 @@ def index():
     prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
     last_url = url_for('index', page=posts.pages)
     return render_template('index.html',
-                           title='Home',
+                           title=_('Home'),
                            posts=posts.items,
                            form=form,
                            pages=posts.pages,
@@ -58,7 +60,7 @@ def explore():
     prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
     last_url = url_for('explore', page=posts.pages)
     return render_template('index.html',
-                           title='Explore',
+                           title=_('Explore'),
                            posts=posts.items,
                            pages=posts.pages,
                            current_page=page,
@@ -71,7 +73,7 @@ def explore():
 @application_instance.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        flash('You have already authenticated and redirected to index page.')
+        flash(_('You have already authenticated and redirected to index page.'))
         return redirect(url_for('index'))
 
     form = LoginForm()
@@ -79,17 +81,17 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
 
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password! Try again. :(')
-            return render_template('login.html', title='Sign In', form=form)
+            flash(_('Invalid username or password! Try again. :('))
+            return render_template('login.html', title=_('Sign In'), form=form)
 
         login_user(user, remember=form.remember_me.data)
-        flash('Login successful. Welcome back! :)')
+        flash(_('Login successful. Welcome back! :)'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
 
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title=_('Sign In'), form=form)
 
 
 @application_instance.route('/logout')
@@ -101,7 +103,7 @@ def logout():
 @application_instance.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        flash('You have already authenticated and redirected to index page.')
+        flash(_('You have already authenticated and redirected to index page.'))
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -109,11 +111,11 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash(_('Congratulations, you are now a registered user!'))
         login_user(user)
-        flash('You was automatically logged in with your credentials.')
+        flash(_('You was automatically logged in with your credentials.'))
         return redirect(url_for('index'))
-    return render_template('register.html', title='Registration', form=form)
+    return render_template('register.html', title=_('Registration'), form=form)
 
 
 @application_instance.route('/reset_password_request', methods=['GET', 'POST'])
@@ -125,27 +127,27 @@ def reset_password_request():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None:
             send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password.')
+        flash(_('Check your email for the instructions to reset your password.'))
         return redirect(url_for('login'))
-    return render_template('request_password_reset.html', title='Request New Password', form=form)
+    return render_template('request_password_reset.html', title=_('Request New Password'), form=form)
 
 
 @application_instance.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
-        flash('You must logout before reset your password!')
+        flash(_('You must logout before reset your password!'))
         return redirect(url_for('index'))
     user = User.verify_reset_password_token(token)
     if not user:
-        flash('Incorrect or expired token. Please try again.')
+        flash(_('Incorrect or expired token. Please try again.'))
         return redirect(url_for('index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password was successfully changed.')
+        flash(_('Your password was successfully changed.'))
         return redirect(url_for('index'))
-    return render_template('reset_password.html', title='Reset Password', form=form)
+    return render_template('reset_password.html', title=_('Reset Password'), form=form)
 
 
 @application_instance.route('/user/<username>')
@@ -156,9 +158,14 @@ def user(username):
         page, application_instance.config['POSTS_PER_PAGE'], False)
     next_url = url_for('user', username=username, page=posts.next_num) if posts.has_next else None
     prev_url = url_for('user', username=username, page=posts.prev_num) if posts.has_prev else None
+    first_url = url_for('user', username=username, page=1)
+    last_url = url_for('user', username=username, page=posts.pages)
     return render_template('user.html',
-                           title='User Profile',
+                           title=_('User Profile'),
                            user=user,
+                           last_url=last_url,
+                           first_url=first_url,
+                           pages=posts.pages,
                            posts=posts.items,
                            prev_url=prev_url,
                            next_url=next_url)
@@ -175,7 +182,7 @@ def edit_profile():
         current_user.facebook = form.facebook.data
         current_user.telegram = form.telegram.data
         db.session.commit()
-        flash('Edit profile form has been saved.')
+        flash(_('Edit profile form has been saved.'))
         return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.about_me.data = current_user.about_me
@@ -183,7 +190,7 @@ def edit_profile():
         form.skype.data = current_user.skype
         form.facebook.data = current_user.facebook
         form.telegram.data = current_user.telegram
-    return render_template('edit_profile.html', title="Edit Profile Data", form=form)
+    return render_template('edit_profile.html', title=_("Edit Profile Data"), form=form)
 
 
 @application_instance.route('/follow/<username>')
@@ -191,14 +198,14 @@ def edit_profile():
 def follow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash('User {} not found.'.format(username))
+        flash(_('User %(username)s not found.', username=username))
         return redirect(url_for('index'))
     if user == current_user:
-        flash('You cannot follow yourself!')
+        flash(_('You cannot follow yourself!'))
         return redirect(url_for('user', username=username))
     current_user.follow(user)
     db.session.commit()
-    flash('You are following {} now!'.format(username))
+    flash(_('You are following %(username)s now!', username=username))
     return redirect(url_for('user', username=username))
 
 
@@ -207,14 +214,14 @@ def follow(username):
 def unfollow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash('User {} not found.'.format(username))
+        flash(_('User %(username)s not found.', username=username))
         return redirect(url_for('index'))
     if user == current_user:
-        flash('You cannot unfollow yourself!')
+        flash(_('You cannot unfollow yourself!'))
         return redirect(url_for('user', username=username))
     current_user.unfollow(user)
     db.session.commit()
-    flash('You are not following {}'.format(username))
+    flash(_('You are not following %(username)s', username=username))
     return redirect(url_for('user', username=username))
 
 
@@ -229,13 +236,13 @@ def post(id):
 def post_delete(id):
     post = Post.query.filter_by(id=id).first()
     if post is None:
-        flash('Post with id {} not found :('.format(id))
+        flash(_('Post with id %(id)s not found :(', id=id))
         return redirect(url_for('index'))
     if post.author != current_user:
-        flash('You are not author of this post!')
+        flash(_('You are not author of this post!'))
         return redirect(url_for('post', id=id))
     elif post.author == current_user:
         post.deleted = True
         db.session.commit()
-        flash('Post {} ({}) deleted.'.format(id, post.title))
+        flash(_('Post %(id)s (%(title)s) deleted.', id=id, title=post.title))
         return redirect(url_for('index'))

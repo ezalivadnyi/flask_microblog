@@ -5,7 +5,7 @@
     {% if title or post %}
     <title>{{ title or post.title }} - Microblog</title>
     {% else %}
-    <title>Welcome to Microblog</title>
+    <title>{{ _('Welcome to ') }} Microblog</title>
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -22,13 +22,13 @@
             <nav class="nav">
                 <div class="navbar-brand">Microblog</div>
                 {% if current_user.is_anonymous %}
-                <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-link" href="{{ url_for('index') }}">{{ _('Home') }}</a>
+                <a class="nav-link" href="{{ url_for('login') }}">{{ _('Login') }}</a>
                 {% else %}
-                <a class="nav-link" href="{{ url_for('index') }}">Feed</a>
-                <a class="nav-link" href="{{ url_for('explore') }}">Explore</a>
-                <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                <a class="nav-link" href="{{ url_for('index') }}">{{ _('Feed') }}</a>
+                <a class="nav-link" href="{{ url_for('explore') }}">{{ _('Explore') }}</a>
+                <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}">{{ _('Profile') }}</a>
+                <a class="nav-link" href="{{ url_for('logout') }}">{{ _('Logout') }}</a>
                 {% endif %}
             </nav>
         </div>
@@ -55,6 +55,7 @@
 {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     {{ moment.include_moment() }}
+    {{ moment.lang(g.locale) }}
 {% endblock %}
 
 </body>

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Error 404</h1>
-    <p>Page Not Found</p>
+    <h1>{{ _('Error') }} 404</h1>
+    <p>{{ _('Page Not Found') }}</p>
     <img src="https://www.telegraph.co.uk/content/dam/spark/Images/robot-error.jpg?imwidth=720"
-         alt="Error 404"
+         alt="{{ _('Error') }} 404"
          style="max-width: 100%">
 {% endblock %}
