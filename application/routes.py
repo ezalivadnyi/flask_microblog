@@ -2,11 +2,13 @@ from application import application_instance, db
 from application.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from application.models import User, Post
 from application.email import send_password_reset_email
-from flask import g, render_template, flash, redirect, url_for, request
+from application.translate import translate
+from flask import g, render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_babel import _, get_locale
 from werkzeug.urls import url_parse
 from datetime import datetime
+from guess_language import guess_language
 
 
 @application_instance.before_request
@@ -21,14 +23,17 @@ def before_request():
 @application_instance.route('/index', methods=['GET', 'POST'])
 def index():
     form = PostForm()
-    if form.validate_on_submit():
-        post = Post(title=form.post_title.data, body=form.post_body.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash(_('Your post was saved in database!'))
-        return redirect(url_for('index'))
     page = request.args.get('page', 1, type=int)
     if current_user.is_authenticated:
+        if form.validate_on_submit():
+            language = guess_language(form.post_body.data)
+            if language == 'UNKNOWN' or len(language) > 5:
+                language = ''
+            post = Post(title=form.post_title.data, body=form.post_body.data, author=current_user, language=language)
+            db.session.add(post)
+            db.session.commit()
+            flash(_('Your post was saved in database!'))
+            return redirect(url_for('index'))
         posts = current_user.followed_posts().paginate(
             page, application_instance.config['POSTS_PER_PAGE'], False)
     elif current_user.is_anonymous:
@@ -246,3 +251,19 @@ def post_delete(id):
         db.session.commit()
         flash(_('Post %(id)s (%(title)s) deleted.', id=id, title=post.title))
         return redirect(url_for('index'))
+
+
+@application_instance.route('/translate', methods=['POST'])
+def translate_text():
+    id = request.form['id']
+    if id and int(id) > 0:
+        post = Post.query.get(id)
+        if post is not None and post.language:
+            return jsonify({'text': translate(
+                post.body,
+                post.language,
+                g.locale
+            )})
+        else:
+            return jsonify({'text': 'Post not found.'})
+    return jsonify({'text': 'Incorrect id.'})

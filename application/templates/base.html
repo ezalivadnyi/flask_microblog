@@ -53,9 +53,31 @@
     </div>
 
 {% block scripts %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
+
+    <script>
+    $(document).ready(function () {
+        var $translateBtn = $('.js-translate-post-btn');
+        if($translateBtn.length){
+            var postID = $translateBtn.data('post-id');
+            var translationHolder = $translateBtn.parent();
+            $translateBtn.on('click', function(){
+                translationHolder.html('<img src="{{ url_for('static', filename='img/loading.gif') }}">');
+                $.post('/translate', {
+                    id: postID
+                }).done(function (response) {
+                    translationHolder.text(response['text'])
+                }).fail(function (response) {
+                    translationHolder.text("{{ _('Error: Could not contact server.') }}" +
+                        " " + response['text'])
+                })
+            })
+        }
+    })
+    </script>
+
 {% endblock %}
 
 </body>

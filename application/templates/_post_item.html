@@ -14,14 +14,29 @@
                 {% endif %}
             </h4>
 
-            <p class="card-text">{{ post.body|truncate }}</p>
+            <p class="card-text">
+                {{ post.body|truncate }}
+
+                {% if post.language and post.language != g.locale %}
+                    <br>
+                    <span class="translation">
+                        <span class="js-translate-post-btn btn btn-primary" data-post-id="{{ post.id }}">
+                            {{ _('Translate') }}
+                        </span>
+                    </span>
+                {% endif %}
+
+            </p>
         </div>
         <div class="card-footer">
             {{ _('Author') }}: <a href="{{ url_for('user', username=post.author.username) }}">
                 <img src="{{ post.author.avatar(30) }}" alt="">
                 <b>{{ post.author.username }}</b>
             </a>
+
             <span class="text-right"> {{ moment(post.timestamp).fromNow() }}</span>
+
+
         </div>
     </div>
     <br>

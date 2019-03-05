@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
+    <p>* {{ _('To change your avatar visit') }} <a href="https://ru.gravatar.com/emails/" target="_blank">gravatar.com</a></p>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         {% include 'forms/username.html' %}

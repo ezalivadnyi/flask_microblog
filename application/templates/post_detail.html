@@ -35,7 +35,17 @@
             <h1 class="card-title">{{ post.title }}</h1>
         </div>
         <div class="card-body">
-            <p class="card-text">{{ post.body }}</p>
+            <p class="card-text">
+                {{ post.body }}
+                   {% if post.language and post.language != g.locale %}
+                        <br>
+                        <span class="translation">
+                            <span class="js-translate-post-btn btn btn-primary" data-post-id="{{ post.id }}">
+                                {{ _('Translate') }}
+                            </span>
+                        </span>
+                   {% endif %}
+            </p>
         </div>
     </div>
 

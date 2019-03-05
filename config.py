@@ -4,12 +4,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     APPLICATION_NAME = 'Microblog'
+    POSTS_PER_PAGE = 2
+    LANGUAGES = ['en', 'ru']
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you_will_never_guess_this_key'
-
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'microblog_sqlite.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
 
     MAIL_SERVER = os.environ.get('MAIL_SERVER')  # 'smtp.googlemail.com' for Gmail
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)  # port 587 for Gmail TLS
@@ -18,5 +17,6 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_ADMINS = os.environ.get('MAIL_ADMINS')
 
-    POSTS_PER_PAGE = 2
-    LANGUAGES = ['en', 'ru']
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'microblog_sqlite.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-03-03 12:20+0200\n"
+"POT-Creation-Date: 2019-03-05 20:49+0200\n"
 "PO-Revision-Date: 2019-03-03 10:15+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -43,7 +43,7 @@ msgstr "Пароль"
 msgid "Remember Me"
 msgstr "Запомнить меня"
 
-#: application/forms.py:12 application/routes.py:84 application/routes.py:93
+#: application/forms.py:12 application/routes.py:90 application/routes.py:99
 msgid "Sign In"
 msgstr "Войти"
 
@@ -103,114 +103,122 @@ msgstr "Новый пароль"
 msgid "Set This New Password"
 msgstr "Установить этот пароль"
 
-#: application/routes.py:27
+#: application/routes.py:35
 msgid "Your post was saved in database!"
 msgstr "Ваша публикация сохранена в базе данных!"
 
-#: application/routes.py:41 application/templates/base.html:25
+#: application/routes.py:47 application/templates/base.html:25
 msgid "Home"
 msgstr "Главная"
 
-#: application/routes.py:62 application/templates/base.html:29
+#: application/routes.py:68 application/templates/base.html:29
 msgid "Explore"
 msgstr "Все публикации"
 
-#: application/routes.py:75 application/routes.py:105
+#: application/routes.py:81 application/routes.py:111
 msgid "You have already authenticated and redirected to index page."
 msgstr "Вы уже вошли и переадресованы на главную"
 
-#: application/routes.py:83
+#: application/routes.py:89
 msgid "Invalid username or password! Try again. :("
 msgstr "Неверное имя пользователя или пароль. Попробуйте еще раз. :("
 
-#: application/routes.py:87
+#: application/routes.py:93
 msgid "Login successful. Welcome back! :)"
 msgstr "Вход успешен. С возвращением! :)"
 
-#: application/routes.py:113
+#: application/routes.py:119
 msgid "Congratulations, you are now a registered user!"
 msgstr "Поздравляем, вы теперь зарегистрированный пользователь!"
 
-#: application/routes.py:115
+#: application/routes.py:121
 msgid "You was automatically logged in with your credentials."
 msgstr "Вы автоматически переадресованы с вашими данными пользователя."
 
-#: application/routes.py:117
+#: application/routes.py:123
 msgid "Registration"
 msgstr "Регистрация"
 
-#: application/routes.py:129
+#: application/routes.py:135
 msgid "Check your email for the instructions to reset your password."
 msgstr "Проверьте вашу почту для дальнейших инструкций по сбросу пароля."
 
-#: application/routes.py:131
+#: application/routes.py:137
 msgid "Request New Password"
 msgstr "Запросить новый пароль"
 
-#: application/routes.py:137
+#: application/routes.py:143
 msgid "You must logout before reset your password!"
 msgstr "Чтоюы сбросить пароль, сперва нужно выйти!"
 
-#: application/routes.py:141
+#: application/routes.py:147
 msgid "Incorrect or expired token. Please try again."
 msgstr "Неверный либо просроченный токен. Попробуйте еще раз."
 
-#: application/routes.py:147
+#: application/routes.py:153
 msgid "Your password was successfully changed."
 msgstr "Пароль успешно изменён."
 
-#: application/routes.py:149
+#: application/routes.py:155
 msgid "Reset Password"
 msgstr "Сбросить пароль"
 
-#: application/routes.py:163
+#: application/routes.py:169
 msgid "User Profile"
 msgstr "Профиль пользователя"
 
-#: application/routes.py:184
+#: application/routes.py:190
 msgid "Edit profile form has been saved."
 msgstr "Форма редактирования пользователя сохранена."
 
-#: application/routes.py:192
+#: application/routes.py:198
 msgid "Edit Profile Data"
 msgstr "Изменение данных профиля"
 
-#: application/routes.py:200 application/routes.py:216
+#: application/routes.py:206 application/routes.py:222
 #, python-format
 msgid "User %(username)s not found."
 msgstr "Пользователь %(username)s не найден."
 
-#: application/routes.py:203
+#: application/routes.py:209
 msgid "You cannot follow yourself!"
 msgstr "Нельзя подписаться на себя!"
 
-#: application/routes.py:207
+#: application/routes.py:213
 #, python-format
 msgid "You are following %(username)s now!"
 msgstr "Вы отписались от %(username)s!"
 
-#: application/routes.py:219
+#: application/routes.py:225
 msgid "You cannot unfollow yourself!"
 msgstr "Нельзя отписаться от себя!"
 
-#: application/routes.py:223
+#: application/routes.py:229
 #, python-format
 msgid "You are not following %(username)s"
 msgstr "Вы не подписаны на %(username)s"
 
-#: application/routes.py:238
+#: application/routes.py:244
 #, python-format
 msgid "Post with id %(id)s not found :("
 msgstr "Публикация с id %(id)s не найдена :("
 
-#: application/routes.py:241
+#: application/routes.py:247
 msgid "You are not author of this post!"
 msgstr "Вы не автор этой публикации!"
 
-#: application/routes.py:246
+#: application/routes.py:252
 #, python-format
 msgid "Post %(id)s (%(title)s) deleted."
 msgstr "Публикация %(id)s (%(title)s) удалена."
+
+#: application/translate.py:9
+msgid "Error: the translation service is not configured."
+msgstr "Ошибка: сервис перевода не настроен."
+
+#: application/translate.py:15
+msgid "Error: the translation service failed."
+msgstr "Ошибка: что-то не так с сервисом перевода."
 
 #: application/templates/404.html:4 application/templates/404.html:7
 #: application/templates/500.html:4 application/templates/500.html:9
@@ -274,7 +282,12 @@ msgstr "Удалить"
 msgid "Delete this post"
 msgstr "Удалить эту публикацию"
 
-#: application/templates/_post_item.html:20
+#: application/templates/_post_item.html:24
+#: application/templates/post_detail.html:44
+msgid "Translate"
+msgstr "Перевести"
+
+#: application/templates/_post_item.html:32
 #: application/templates/post_detail.html:15
 msgid "Author"
 msgstr "Автор"
@@ -299,7 +312,16 @@ msgstr "Профиль"
 msgid "Logout"
 msgstr "Выйти"
 
-#: application/templates/index.html:5 application/templates/post_detail.html:5
+#: application/templates/base.html:73
+msgid "Error: Could not contact server."
+msgstr "Ошибка: не могу связаться с сервером."
+
+#: application/templates/edit_profile.html:5
+msgid "To change your avatar visit"
+msgstr "Чтобы сменить аватар посетите"
+
+#: application/templates/index.html:5 application/templates/index.html:10
+#: application/templates/post_detail.html:5
 #: application/templates/post_detail.html:7
 msgid "Hello"
 msgstr "Здравствуйте"
