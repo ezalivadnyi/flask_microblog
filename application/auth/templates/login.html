@@ -10,12 +10,12 @@
         {% include 'forms/submit.html' %}
     </form>
     <p>{{ _('New User?') }}
-        <a href="{{ url_for('register') }}">
+        <a href="{{ url_for('auth.register') }}">
             {{ _('Click here to Register!') }}
         </a>
     </p>
     <p>{{ _('Forgot Your Password?') }}
-        <a href="{{ url_for('reset_password_request') }}">
+        <a href="{{ url_for('auth.reset_password_request') }}">
             {{ _('Click here to reset it.') }}
         </a>
     </p>

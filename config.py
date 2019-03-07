@@ -1,10 +1,13 @@
 import os
+from dotenv import load_dotenv
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 
 class Config(object):
     APPLICATION_NAME = 'Microblog'
-    POSTS_PER_PAGE = 2
+    POSTS_PER_PAGE = 10
     LANGUAGES = ['en', 'ru']
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you_will_never_guess_this_key'

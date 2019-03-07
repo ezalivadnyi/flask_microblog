@@ -27,11 +27,11 @@
 
     {% if posts %}
         <h5>{{ _('Latest Posts') }}</h5>
-        {% include '_pagination.html' %}
+        {% include 'partials/_pagination.html' %}
         {% for post in posts %}
-            {% include '_post_item.html' %}
+            {% include 'partials/_post_item.html' %}
         {% endfor %}
-        {% include '_pagination.html' %}
+        {% include 'partials/_pagination.html' %}
     {% else %}
         <h5>{{ _('Nothing to show.') }}</h5>
     {% endif %}

@@ -3,3 +3,4 @@
 /logs
 microblog_sqlite.db
 messages.pot
+.env
