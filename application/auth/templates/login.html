@@ -9,12 +9,12 @@
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         {% include 'forms/submit.html' %}
     </form>
-    <p>{{ _('New User?') }}
+    <p><i class="fas fa-user-plus"></i> {{ _('New User?') }}
         <a href="{{ url_for('auth.register') }}">
             {{ _('Click here to Register!') }}
         </a>
     </p>
-    <p>{{ _('Forgot Your Password?') }}
+    <p><i class="fas fa-unlock"></i> {{ _('Forgot Your Password?') }}
         <a href="{{ url_for('auth.reset_password_request') }}">
             {{ _('Click here to reset it.') }}
         </a>

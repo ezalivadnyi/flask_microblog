@@ -21,7 +21,7 @@
                     <br>
                     <span class="translation">
                         <span class="js-translate-post-btn btn btn-primary" data-post-id="{{ post.id }}">
-                            {{ _('Translate') }}
+                            <i class="fas fa-language"></i> {{ _('Translate') }}
                         </span>
                     </span>
                 {% endif %}
@@ -29,12 +29,12 @@
             </p>
         </div>
         <div class="card-footer">
-            {{ _('Author') }}: <a href="{{ url_for('blog.user', username=post.author.username) }}">
+            <a href="{{ url_for('blog.user', username=post.author.username) }}">
                 <img src="{{ post.author.avatar(30) }}" alt="">
                 <b>{{ post.author.username }}</b>
             </a>
 
-            <span class="text-right"> {{ moment(post.timestamp).fromNow() }}</span>
+            <span class="text-right"><i class="fas fa-calendar-alt"></i> {{ moment(post.timestamp).fromNow() }}</span>
 
 
         </div>

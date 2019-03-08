@@ -18,7 +18,7 @@
                 <b>{{ post.author.username }}</b>
             </a>
         </div>
-        <div>{{ _('Published') }}: {{ moment(post.timestamp).fromNow() }}</div>
+        <div><i class="fas fa-calendar-alt"></i> {{ _('Published') }}: {{ moment(post.timestamp).fromNow() }}</div>
         {% if current_user == post.author %}
             <button type="button" class="close" aria-label="Close">
                 <a href="{{ url_for('blog.post_delete', id=post.id) }}" title="Delete this post">
@@ -41,7 +41,7 @@
                         <br>
                         <span class="translation">
                             <span class="js-translate-post-btn btn btn-primary" data-post-id="{{ post.id }}">
-                                {{ _('Translate') }}
+                                <i class="fas fa-translate"></i> {{ _('Translate') }}
                             </span>
                         </span>
                    {% endif %}

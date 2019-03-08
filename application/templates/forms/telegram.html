@@ -1,4 +1,7 @@
 <div class="form-group">
+    <span style="color: #0088cc;">
+        <i class="fab fa-telegram"></i>
+    </span>
     {{ form.telegram.label(class='col-form-label') }}
     {{ form.telegram(size=32, class='form-control', placeholder=_('Only username, without @ symbol at begin!')) }}
     {% for error in form.telegram.errors %}

@@ -2,31 +2,32 @@
 
 {% block content %}
         {% if current_user.is_authenticated and form %}
-            <h1>{{ _('Hello') }}, {{ current_user.username }}</h1>
+            <h1 class="text-center">{{ _('Hello') }}, {{ current_user.username }}</h1>
         {% elif current_user.is_authenticated %}
-            <h1>{{ title }}</h1>
-            <small>{{ _('Here you can find posts from all the users of this website.') }}</small>
+            <h1 class="text-center">{{ title }}</h1>
+            <div class="text-center"><small>{{ _('Here you can find posts from all the users of this website.') }}</small></div>
         {% else %}
-            <h1>{{ _('Hello') }} {{ _('Guest') }}</h1>
-            <small>{{ _('Please login to make new posts, follow other users and achieve another features.') }}</small>
+            <h1 class="text-center">{{ _('Hello') }} {{ _('Guest') }}</h1>
+            <div class="text-center"><small>{{ _('Please login to make new posts, follow other users and achieve another features.') }}</small></div>
         {% endif %}
     <hr>
 
     {% if current_user.is_authenticated and form %}
-        <h5>{{ _('Create New Post') }}</h5>
+        <br>
+        <h5 class="text-center">{{ _('Create New Post') }}</h5>
         <form action="" method="post">
         {{ form.hidden_tag() }}
         {% include 'forms/post_title.html' %}
         {% include 'forms/post_body.html' %}
         {% include 'forms/submit.html' %}
         </form>
-        <hr>
+        <br>
     {% endif %}
 
 
 
     {% if posts %}
-        <h5>{{ _('Latest Posts') }}</h5>
+        <h5 class="text-center">{{ _('Latest Posts') }}</h5>
         {% include 'partials/_pagination.html' %}
         {% for post in posts %}
             {% include 'partials/_post_item.html' %}

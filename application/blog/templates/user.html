@@ -37,32 +37,38 @@
                 <td>
 
                     {% if user.about_me %}
-                        <b>{{ _('About Me') }}:</b>
+                        <b><i class="fas fa-headset"></i> {{ _('About Me') }}:</b>
                         {{ user.about_me }}<br>
                     {% endif %}
                     <br>
 
                     {% if user.skype %}
-                        <b>Skype:</b>
+                        <span style="color: #00AFF0;">
+                            <i class="fab fa-skype"></i>
+                        </span>
                         <a href="skype:{{ user.skype }}?call">{{ user.skype }}</a><br>
                     {% endif %}
 
                     {% if user.telegram %}
-                        <b>Telegram:</b>
+                        <span style="color: #0088cc;">
+                            <i class="fab fa-telegram"></i>
+                        </span>
                         <a href="https://t.me/{{ user.telegram }}" target="_blank">
                             {{ user.telegram }}
                         </a><br>
                     {% endif %}
 
                     {% if user.facebook %}
-                        <b>Facebook:</b>
+                        <span style="color: #3C5A99;">
+                            <i class="fab fa-facebook"></i>
+                        </span>
                         <a href="https://www.facebook.com/{{ user.facebook }}" target="_blank">
                             {{ user.facebook }}
                         </a><br>
                     {% endif %}
                     <br>
 
-                    {% if user.last_seen %}{{ _('Last seen') }}: {{ moment(user.last_seen).fromNow() }}{% endif %}
+                    {% if user.last_seen %}<i class="fas fa-clock"></i> {{ _('Last seen') }}: {{ moment(user.last_seen).fromNow() }}{% endif %}
 
                 </td>
             </tr>

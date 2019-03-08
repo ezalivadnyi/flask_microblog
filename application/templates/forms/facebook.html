@@ -1,4 +1,7 @@
 <div class="form-group">
+    <span style="color: #3C5A99;">
+        <i class="fab fa-facebook"></i>
+    </span>
     {{ form.facebook.label(class='col-form-label') }}
     {{ form.facebook(size=32, class='form-control', placeholder=_('Only username! It will be concatenated with https://www.facebook.com/...')) }}
     {% for error in form.facebook.errors %}

@@ -1,5 +1,6 @@
 <div class="form-group">
-    {{ form.post_title.label(class='col-form-label') }}
+    <i class="fas fa-text-width"></i>
+    <strong>{{ form.post_title.label(class='col-form-label') }}</strong>
     {{ form.post_title(size=32, maxlength=60, placeholder=_('Enter post title here (max 60 chars)'), class='form-control') }}
     {% for error in form.post_title.errors %}
         <small class="form-text text-danger">{{ error }}</small>

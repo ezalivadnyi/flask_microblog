@@ -1,4 +1,5 @@
 <div class="form-group">
+    <i class="fas fa-envelope-open"></i>
     {{ form.email.label(class='col-form-label') }}
     {{ form.email(size=64, type='email', class='form-control', autofocus=True) }}
     {% for error in form.email.errors %}
