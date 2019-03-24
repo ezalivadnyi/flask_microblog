@@ -1,5 +1,5 @@
 from application import db
-from application.blog.forms import EditProfileForm, PostForm
+from application.blog.forms import EditProfileForm, PostForm, SearchForm
 from application.models import User, Post
 from application.translate import translate
 from application.blog import bp
@@ -16,6 +16,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
     g.locale = str(get_locale())
+    g.search_form = SearchForm()
+    g.application_name = current_app.config['APPLICATION_NAME']
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -186,3 +188,16 @@ def translate_text():
         else:
             return jsonify({'text': 'Post not found.'})
     return jsonify({'text': 'Incorrect id.'})
+
+
+@bp.route('/search')
+def search():
+    if not g.search_form.validate():
+        flash('What yoy wanna search?')
+        return redirect(url_for('blog.explore'))
+    page = request.args.get('page', 1, type=int)
+    posts, total = Post.search(g.search_form.q.data, page, current_app.config['POSTS_PER_PAGE'])
+    pages = total // current_app.config['POSTS_PER_PAGE']
+    next_url = url_for('blog.search', q=g.search_form.q.data, page=page + 1) if total > page * current_app.config['POSTS_PER_PAGE'] else None
+    prev_url = url_for('blog.search', q=g.search_form.q.data, page=page - 1) if page > 1 else None
+    return render_template('search.html', title=_('Search'), posts=posts, pages=pages, next_url=next_url, prev_url=prev_url)

@@ -9,6 +9,7 @@ from config import Config
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
 import os
+from elasticsearch import Elasticsearch
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -30,6 +31,9 @@ def create_app(config_class=Config):
     mail.init_app(application_instance)
     moment.init_app(application_instance)
     babel.init_app(application_instance)
+
+    application_instance.elasticsearch = Elasticsearch(application_instance.config['ELASTICSEARCH_URL']) \
+        if os.environ.get('ELASTICSEARCH_URL') else None
 
     from application.errors import bp as errors_bp
     application_instance.register_blueprint(errors_bp)

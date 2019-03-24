@@ -1,3 +1,4 @@
+from flask import request
 from flask_wtf import FlaskForm
 from flask_babel import lazy_gettext as _l
 from wtforms import StringField, TextAreaField, SubmitField
@@ -28,3 +29,14 @@ class PostForm(FlaskForm):
     post_title = StringField(_l('Title'), validators=[DataRequired(), Length(max=60)])
     post_body = TextAreaField(_l('Body'), validators=[DataRequired(), Length(min=20)])
     submit = SubmitField(_l('Post it!'))
+
+
+class SearchForm(FlaskForm):
+    q = StringField(_l('Search'), validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)

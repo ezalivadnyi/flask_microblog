@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        {% if current_user.is_guest %}
+            <h1 class="text-center">{{ _('Hello') }} {{ _('Guest') }}</h1>
+            <div class="text-center"><small>{{ _('Please login to make new posts, follow other users and achieve another features.') }}</small></div>
+        {% endif %}
+    <hr>
+
+
+    {% if posts %}
+        <h5 class="text-center">{{ _('Search') }}</h5>
+        {% include 'partials/_pagination.html' %}
+        {% for post in posts %}
+            {% include 'partials/_post_item.html' %}
+        {% endfor %}
+        {% include 'partials/_pagination.html' %}
+    {% else %}
+        <h5 class="text-center">{{ _('Nothing to show.') }}</h5>
+    {% endif %}
+
+
+
+{% endblock %}

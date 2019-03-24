@@ -6,7 +6,7 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 
 class Config(object):
-    APPLICATION_NAME = 'Microblog'
+    APPLICATION_NAME = 'Shit Board'
     POSTS_PER_PAGE = 10
     LANGUAGES = ['en', 'ru']
 
@@ -23,3 +23,5 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'microblog_sqlite.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')

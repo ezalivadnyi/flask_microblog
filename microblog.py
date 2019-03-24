@@ -9,7 +9,9 @@ cli.register(app)
 # Fired with command 'flask shell'.
 @app.shell_context_processor
 def make_shell_context():
+    app.app_context().push()
     return {
+        'app': app,
         'db': db,
         'User': User,
         'Post': Post
