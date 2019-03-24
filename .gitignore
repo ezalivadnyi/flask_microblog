@@ -1,5 +1,6 @@
 /.idea
 /venv
+/.venv
 /logs
 microblog_sqlite.db
 messages.pot
