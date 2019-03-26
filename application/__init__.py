@@ -64,15 +64,21 @@ def create_app(config_class=Config):
             mail_handler.setLevel(logging.ERROR)
             application_instance.logger.addHandler(mail_handler)
 
-        # Logging errors to file
-        if not os.path.exists('logs'):
-            os.mkdir('logs')
-        file_hadler = RotatingFileHandler('logs/microblog.log', maxBytes=10240, backupCount=10)
-        file_hadler.setFormatter(logging.Formatter(
-            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-        ))
-        file_hadler.setLevel(logging.INFO)
-        application_instance.logger.addHandler(file_hadler)
+        if application_instance.config['LOG_TO_STDOUT']:
+            stream_handler = logging.StreamHandler()
+            stream_handler.setLevel(logging.INFO)
+            application_instance.logger.addHandler(stream_handler)
+        else:
+            # Logging errors to file
+            if not os.path.exists('logs'):
+                os.mkdir('logs')
+            file_hadler = RotatingFileHandler('logs/microblog.log', maxBytes=10240, backupCount=10)
+            file_hadler.setFormatter(logging.Formatter(
+                '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+            ))
+            file_hadler.setLevel(logging.INFO)
+            application_instance.logger.addHandler(file_hadler)
+
         application_instance.logger.setLevel(logging.INFO)
         application_instance.logger.info('Microblog startup')
 
